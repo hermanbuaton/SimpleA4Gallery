@@ -1,0 +1,213 @@
+<html>
+    
+
+    <head>
+    
+        <meta name="viewport" content="width=device-width">
+        <title>Simple A4 Gallery</title>
+        
+        <!-- jQuery -->
+        <script type="text/javascript" src="script/jquery.min.js"></script>
+        
+        <!-- jQuery UI -->
+        <!--
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+        -->
+        
+        <!-- Gallery UI -->
+        <link rel="stylesheet" type="text/css" href="stylesheet/gallery-ui.css"></link>
+        <link rel="stylesheet" type="text/css" href="stylesheet/gallery-ui-mobile.css"></link>
+    
+        <!-- Custom Styles -->
+        <style>
+            
+            #container {
+                position: relative;
+                width: 1020px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            @media (max-width: 768px) {
+                
+                #container {
+                    width: calc(100% - 10px);
+                    overflow-x: hidden;
+                }
+                
+            }
+            
+            .simple-gallery-item-text {
+                
+                width: 100%;
+                
+                font-size: 72px;
+                text-align: center;
+                
+            }
+            
+        </style>
+    
+    </head>
+    
+    <body>
+        
+        <div id="container">
+            
+            <div id="content">
+                
+                <h3>Simple A4 Gallery</h3>
+                
+                <div id="gallery" class="simple-gallery">
+                    
+                    <div id="gallery-content" class="simple-gallery-content"></div>
+                    <div id="gallery-nav" class="simple-gallery-nav">
+                    
+                        <label id="prev" class="nav-btn simple-gallery-nav-btn simple-gallery-nav-prev"><</label>
+                        <label id="next" class="nav-btn simple-gallery-nav-btn simple-gallery-nav-next">></label>
+                        
+                    </div>
+                    
+                    <!--
+                    <div id="gallery-spotlight" class="simple-gallery-spotlight">
+                        <div id="gallery-focus" class="simple-gallery-focus"></div>
+                    </div>
+                    -->
+                    
+                </div>
+                
+                <!--
+                <label id="prev" class="nav-btn"><</label>
+                <label id="next" class="nav-btn">></label>
+                -->
+            </div>
+            
+        </div>
+        
+        <script>
+            
+            var simple_gallery_scroll_pointer = 1;
+            var simple_gallery_content_class_array = [];
+        
+            function addGalleryItems(n) {
+                
+                var gallery = $("#gallery-content");
+                
+                var item = $("<div>");
+                item.addClass("simple-gallery-item");
+                
+                var len = simple_gallery_content_class_array.length;
+                var cls = "simple-gallery-item-" + (len + 1);
+                item.addClass(cls);
+                
+                var text = $("<div>");
+                text.addClass("simple-gallery-item-text");
+                text.append(n);
+                
+                item.append(text);
+                gallery.append(item);
+                
+                simple_gallery_content_class_array.push(cls);
+                
+            }
+            
+            function goToPrevGalleryItem() {
+                
+                console.log("prev");
+                
+                var pointer = simple_gallery_scroll_pointer;
+                if (pointer == 1) {
+                    return;
+                }
+
+                // c for current focused
+                // f for to be focused
+                var cc = pointer;
+                var c = "." + simple_gallery_content_class_array[cc - 1];
+                var fc = --pointer;
+                var f = "." + simple_gallery_content_class_array[fc - 1];
+
+                simple_gallery_scroll_pointer = pointer;
+
+                // Change Focus
+                $(c).removeClass("simple-gallery-focus");
+                $(f).addClass("simple-gallery-focus");
+
+                // Slide
+                var pl = $("#gallery-content").position().left;
+                $("#gallery-content").css({ left: pl + 238 });
+                /*
+                $("#gallery-content").animate({
+                    left: pl + 238
+                }, 500);
+                */
+                
+            }
+            function goToNextGalleryItem() {
+                
+                console.log("next");
+                    
+                var pointer = simple_gallery_scroll_pointer;
+                if (pointer == simple_gallery_content_class_array.length) {
+                    resetGallery();
+                    return;
+                }
+
+                // c for current focused
+                // f for to be focused
+                var cc = pointer;
+                var c = "." + simple_gallery_content_class_array[cc - 1];
+                var fc = ++pointer;
+                var f = "." + simple_gallery_content_class_array[fc - 1];
+
+                simple_gallery_scroll_pointer = pointer;
+
+                // Change Focus
+                $(c).removeClass("simple-gallery-focus");
+                $(f).addClass("simple-gallery-focus");
+
+                // Slide
+                var pl = $("#gallery-content").position().left;
+                $("#gallery-content").css({ left: pl - 238 });
+                /*
+                $("#gallery-content").animate({
+                    left: pl - 238
+                }, 500);
+                */
+                
+            }
+            function resetGallery() {
+                
+                $(".simple-gallery-item").removeClass("simple-gallery-focus");
+                $(".simple-gallery-item-1").addClass("simple-gallery-focus");
+                
+                simple_gallery_scroll_pointer = 1;
+                $("#gallery-content").css({ left: "" });
+                
+            }
+            
+            $(document).ready(function() {
+                
+                addGalleryItems(1); 
+                addGalleryItems(2); 
+                addGalleryItems(3); 
+                addGalleryItems(4); 
+                addGalleryItems(5); 
+                addGalleryItems(6);
+                
+                resetGallery();
+                
+                $("#prev").click(function() {
+                    goToPrevGalleryItem();
+                });
+                $("#next").click(function() {
+                    goToNextGalleryItem();
+                });
+                
+            });
+            
+        </script>
+        
+    </body>
+
+</html>

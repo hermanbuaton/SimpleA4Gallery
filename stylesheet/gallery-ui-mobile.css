@@ -1,0 +1,29 @@
+@media (max-width: 768px) {
+    
+    .simple-gallery,
+    .simple-gallery-nav {
+        
+        width: 100%;
+        min-width: calc(228px * 1.2);
+        
+    }
+
+    .simple-gallery-nav-btn {
+
+        padding-top: calc((72px - 1.2em) / 2);
+        padding-bottom: calc((72px - 1.2em) / 2);
+        
+        font-size: 1.2em;
+        
+    }
+
+    .simple-gallery-content,
+    .simple-gallery-spotlight {
+
+        /* initial position */
+        left: calc(50% - ((228px * 1.2) / 2));
+
+    }
+    
+    
+}
