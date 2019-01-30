@@ -16,6 +16,7 @@
         -->
         
         <!-- Gallery UI -->
+        <script type="text/javascript" src="script/gallery-ui.js"></script>
         <link rel="stylesheet" type="text/css" href="stylesheet/gallery-ui.css"></link>
         <link rel="stylesheet" type="text/css" href="stylesheet/gallery-ui-mobile.css"></link>
     
@@ -86,123 +87,40 @@
         
         <script>
             
-            var simple_gallery_scroll_pointer = 1;
-            var simple_gallery_content_class_array = [];
-        
-            function addGalleryItems(n) {
+            function addGalleryItems2() {
+                
+                // Class Name
+                var len = simple_gallery_content_class_array.length;
+                var cls = "simple-gallery-item-" + (len + 1);
                 
                 var gallery = $("#gallery-content");
                 
                 var item = $("<div>");
                 item.addClass("simple-gallery-item");
-                
-                var len = simple_gallery_content_class_array.length;
-                var cls = "simple-gallery-item-" + (len + 1);
                 item.addClass(cls);
                 
                 var text = $("<div>");
                 text.addClass("simple-gallery-item-text");
-                text.append(n);
+                text.append((len + 1).toFixed(0));
                 
                 item.append(text);
                 gallery.append(item);
                 
+                // Store name in array
                 simple_gallery_content_class_array.push(cls);
-                
-            }
-            
-            function goToPrevGalleryItem() {
-                
-                console.log("prev");
-                
-                var pointer = simple_gallery_scroll_pointer;
-                if (pointer == 1) {
-                    return;
-                }
-
-                // c for current focused
-                // f for to be focused
-                var cc = pointer;
-                var c = "." + simple_gallery_content_class_array[cc - 1];
-                var fc = --pointer;
-                var f = "." + simple_gallery_content_class_array[fc - 1];
-
-                simple_gallery_scroll_pointer = pointer;
-
-                // Change Focus
-                $(c).removeClass("simple-gallery-focus");
-                $(f).addClass("simple-gallery-focus");
-
-                // Slide
-                var pl = $("#gallery-content").position().left;
-                $("#gallery-content").css({ left: pl + 238 });
-                /*
-                $("#gallery-content").animate({
-                    left: pl + 238
-                }, 500);
-                */
-                
-            }
-            function goToNextGalleryItem() {
-                
-                console.log("next");
-                    
-                var pointer = simple_gallery_scroll_pointer;
-                if (pointer == simple_gallery_content_class_array.length) {
-                    resetGallery();
-                    return;
-                }
-
-                // c for current focused
-                // f for to be focused
-                var cc = pointer;
-                var c = "." + simple_gallery_content_class_array[cc - 1];
-                var fc = ++pointer;
-                var f = "." + simple_gallery_content_class_array[fc - 1];
-
-                simple_gallery_scroll_pointer = pointer;
-
-                // Change Focus
-                $(c).removeClass("simple-gallery-focus");
-                $(f).addClass("simple-gallery-focus");
-
-                // Slide
-                var pl = $("#gallery-content").position().left;
-                $("#gallery-content").css({ left: pl - 238 });
-                /*
-                $("#gallery-content").animate({
-                    left: pl - 238
-                }, 500);
-                */
-                
-            }
-            function resetGallery() {
-                
-                $(".simple-gallery-item").removeClass("simple-gallery-focus");
-                $(".simple-gallery-item-1").addClass("simple-gallery-focus");
-                
-                simple_gallery_scroll_pointer = 1;
-                $("#gallery-content").css({ left: "" });
                 
             }
             
             $(document).ready(function() {
                 
-                addGalleryItems(1); 
-                addGalleryItems(2); 
-                addGalleryItems(3); 
-                addGalleryItems(4); 
-                addGalleryItems(5); 
-                addGalleryItems(6);
+                addGalleryItems(); 
+                addGalleryItems(); 
+                addGalleryItems(); 
+                addGalleryItems(); 
+                addGalleryItems(); 
+                addGalleryItems();
                 
                 resetGallery();
-                
-                $("#prev").click(function() {
-                    goToPrevGalleryItem();
-                });
-                $("#next").click(function() {
-                    goToNextGalleryItem();
-                });
                 
             });
             
